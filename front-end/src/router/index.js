@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import ThreadView from "../views/ThreadView.vue";
+import Login from "../views/Login.vue";
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,11 @@ const routes = [
     name: "ThreadView",
     component: ThreadView,
     props: true
+  },
+  {
+    path: "/login",
+    name: 'Login',
+    component: Login,
   }
 ];
 
