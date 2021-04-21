@@ -61,7 +61,7 @@ export default {
 }
 
 .header {
-  margin-left: 100px;
+  margin-left: 80px;
 }
 
 .login-link {

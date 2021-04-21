@@ -64,7 +64,10 @@ export default {
     },
     computed: {
         checkUser() {
-            return this.$root.$data.user._id === this.user._id;
+            if (this.$root.$data.user != null) {
+                return this.$root.$data.user._id === this.user._id;
+            }
+            return false;
         }
     }
 }

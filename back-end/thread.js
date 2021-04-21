@@ -72,7 +72,7 @@ router.get("/id/:id", async(req, res) => {
 });
 
 //get threads by user
-router.get("/userThreads/:id", validUser, async(req, res) => {
+router.get("/userThreads/:id", async(req, res) => {
     try {
         let user = await User.findOne({
             _id: req.params.id 
