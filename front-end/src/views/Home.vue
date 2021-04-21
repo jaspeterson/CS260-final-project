@@ -11,17 +11,18 @@
           <button type="submit" class="pure-button pure-button-primary buttons" @click.prevent="postThread">Post</button>
         </fieldset>
       </form>
-      <!-- filter bar -->
-      <form class="pure-form" @submit.prevent="filterThreads">
-        <fieldset>
-          <legend>Filter by topic</legend>
-          <select class="topic-select pure-u-1-3" v-model="filteredTopic" value="filteredTopic">
-            <option v-for="topic in topics" v-bind:key="topic">{{ topic }}</option>
-          </select>
-          <button class="pure-button pure-button-secondary buttons" @click.prevent="clearFilter">Clear</button>
-        </fieldset>
-      </form>
     </div>
+
+    <!-- filter bar -->
+    <form class="pure-form" @submit.prevent="filterThreads">
+      <fieldset>
+        <legend>Filter by topic</legend>
+        <select class="topic-select pure-u-1-3" v-model="filteredTopic" value="filteredTopic">
+          <option v-for="topic in topics" v-bind:key="topic">{{ topic }}</option>
+        </select>
+        <button class="pure-button pure-button-secondary buttons" @click.prevent="clearFilter">Clear</button>
+      </fieldset>
+    </form>
 
     <!-- thread list -->
     <h2>Threads</h2>
@@ -51,7 +52,6 @@ export default {
   },
   created() {
     this.getThreadList();
-    this.getUserData();
   },
   methods: {
     async getThreadList() {
@@ -81,14 +81,6 @@ export default {
     },
     clearFilter() {
       this.filteredTopic = '';
-    },
-    async getUserData() {
-      try {
-        let response = await axios.get('/api/users');
-        this.$root.$data.user = response.data.user;
-      } catch (error) {
-        this.$root.$data.user = null;
-      }
     }
   },
   computed: {

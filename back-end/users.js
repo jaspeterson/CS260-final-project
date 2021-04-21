@@ -69,9 +69,7 @@ const validUser = async (req, res, next) => {
     return res.status(403).send({
       message: "not logged in"
     });
-  }
-
-  
+  }  
   next();
 };
 
@@ -149,6 +147,18 @@ router.get('/', validUser, async (req, res) => {
     res.send({
       user: req.user
     });
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
+router.get('/id/:id', async (req, res) => {
+  try {
+    let user = await User.findOne({
+      _id: req.params.id
+    });
+    res.send(user);
   } catch (error) {
     console.log(error);
     return res.sendStatus(500);

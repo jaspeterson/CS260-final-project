@@ -97,7 +97,7 @@ export default {
       this.$router.push('/');
     },
     routeToUser() {
-      this.$router.push('/user');
+      this.$router.push('/user/' + this.user._id);
     }
   },
   computed: {

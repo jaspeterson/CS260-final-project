@@ -9,6 +9,10 @@ const mongoose = require('mongoose');
 const express = require("express");
 const router = express.Router();
 
+const users = require("./users.js");
+const User = users.model;
+const validUser = users.valid;
+
 const threadSchema = new mongoose.Schema({
     text: String,
     rating: Number,
@@ -16,17 +20,22 @@ const threadSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    topic: String
+    topic: String,
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    }
 });
 
 const Thread = mongoose.model('Thread', threadSchema);
 
 //post a thread
-router.post("/", async(req, res) => {
+router.post("/", validUser, async(req, res) => {
     const thread = new Thread({
         text: req.body.text,
         rating: 0,
         topic: req.body.topic,
+        user: req.user
     });
 
     try {
@@ -41,7 +50,7 @@ router.post("/", async(req, res) => {
 //get all threads
 router.get("/", async(req, res) => {
     try {
-        let threads = await Thread.find();
+        let threads = await Thread.find().populate('user');
         return res.send(threads);
     } catch (error) {
         console.log(error);
@@ -49,12 +58,12 @@ router.get("/", async(req, res) => {
     }
 });
 
-//get one thread
-router.get("/:id", async(req, res) => {
+//get one thread by id
+router.get("/id/:id", async(req, res) => {
     try {
         let thread = await Thread.findOne({
             _id: req.params.id
-        });
+        }).populate('user');
         return res.send(thread);
     } catch (error) {
         console.log(error);
@@ -62,8 +71,21 @@ router.get("/:id", async(req, res) => {
     }
 });
 
+//get threads by user
+router.get("/userThreads", validUser, async(req, res) => {
+    try {
+        let threads = await Thread.find({
+            user: req.user
+        }).populate('user');
+        return res.send(threads);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+});
+
 //increase rating on thread
-router.put("/:id", async(req, res) => {
+router.put("/:id", validUser, async(req, res) => {
     try {
         let thread = await Thread.findOne({
             _id: req.params.id

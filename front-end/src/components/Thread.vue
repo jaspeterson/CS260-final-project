@@ -7,6 +7,7 @@
                     <div class="rating-text">{{ thread.rating }} points</div>
                 </div>
                 <div>{{formatDate(thread.posted)}}</div>
+                <div class="thread-author"> -- {{ thread.user.firstName }} {{ thread.user.lastName }}</div>
             </div>
             <div class="thread-main">
                 <h1>{{ thread.topic }}</h1>
@@ -39,7 +40,7 @@ export default ({
         },
         async getThread() {
             try {
-                let response = await axios.get("/api/thread/" + this.threadID);
+                let response = await axios.get("/api/thread/id/" + this.threadID);
                 this.thread = response.data;
             } catch (error) {
                 console.log(error);
@@ -74,6 +75,10 @@ export default ({
     padding: 10px;
     border-radius: 10px;
     justify-content: center;
+}
+
+.thread-author {
+    font-style: italic;
 }
 
 .thread-main {

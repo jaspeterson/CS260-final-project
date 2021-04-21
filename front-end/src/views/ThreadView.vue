@@ -55,7 +55,7 @@ export default ({
         },
         async getThread() {
             try {
-                let response = await axios.get("/api/thread/" + this.id);
+                let response = await axios.get("/api/thread/id/" + this.id);
                 this.thread = response.data;
             } catch (error) {
                 console.log(error);

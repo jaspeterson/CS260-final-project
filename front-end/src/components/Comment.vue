@@ -3,6 +3,7 @@
         <div class="comment-container">
             <div class="comment-details">
                 <div>{{formatDate(comment.posted)}}</div>
+                <div class="comment-author"> -- {{ comment.user.firstName }} {{ comment.user.lastName }}</div>
             </div>
             <p class="comment-text">{{ comment.text }}</p>
         </div>
@@ -19,10 +20,7 @@ export default ({
     },
     methods: {
         formatDate(date) {
-            if (moment(date).diff(Date.now(), 'days') < 15)
-                return moment(date).fromNow();
-            else
-                return moment(date).format('d MMMM YYYY');
+            return moment(date).format('d MMMM YYYY');
         },
     }
 })
@@ -45,6 +43,10 @@ export default ({
     padding: 10px;
     border-radius: 10px;
     justify-content: center;
+}
+
+.comment-author {
+    font-style: italic;
 }
 
 .comment-text {

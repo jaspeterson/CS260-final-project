@@ -8,15 +8,26 @@
       <div> ~ </div>
       <a class="footer-link" href="https://github.com/jaspeterson/CS260-final-project">github</a>
       <div> ~ </div>
+      <div class="footer-link">Hours worked: #</div>
+      <div> ~ </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   name: "App",
   components: {
+  },
+  async created() {
+    try {
+      let response = await axios.get('/api/users');
+      this.$root.$data.user = response.data.user;
+    } catch (error) {
+      this.$root.$data.user = null;
+    }
   },
   computed: {
     loginMsg() {
@@ -50,7 +61,7 @@ export default {
 }
 
 .header {
-  margin-left: 80px;
+  margin-left: 100px;
 }
 
 .login-link {
@@ -70,7 +81,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.footer a {
+.footer-link {
   color: #000;
   margin: 0 20px 0 20px;
   text-decoration: none;
