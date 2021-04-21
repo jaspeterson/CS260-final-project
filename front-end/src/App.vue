@@ -65,7 +65,7 @@ export default {
 }
 
 .footer {
-  height: 5vh;
+  height: 6vh;
   padding: 20px 100px 0px 100px;
   display: flex;
   justify-content: center;

@@ -1,25 +1,27 @@
 <template>
   <div class="home">
-    <!-- post thread -->
-    <form class="pure-form" @submit.prevent="postThread">
-      <fieldset>
-        <legend>Post a thread</legend>
-        <input class="pure-u-1-5 topic-post" placeholder="Thread topic" v-model="threadTopic"/>
-        <br>
-        <textarea class="pure-u-1-2" placeholder="Thread content" v-model="threadText" />
-        <button type="submit" class="pure-button pure-button-primary buttons" @click.prevent="postThread">Post</button>
-      </fieldset>
-    </form>
-    <!-- filter bar -->
-    <form class="pure-form" @submit.prevent="filterThreads">
-      <fieldset>
-        <legend>Filter by topic</legend>
-        <select class="topic-select pure-u-1-3" v-model="filteredTopic" value="filteredTopic">
-          <option v-for="topic in topics" v-bind:key="topic">{{ topic }}</option>
-        </select>
-        <button class="pure-button pure-button-secondary buttons" @click.prevent="clearFilter">Clear</button>
-      </fieldset>
-    </form>
+    <div v-if="checkUser">
+      <!-- post thread -->
+      <form class="pure-form" @submit.prevent="postThread">
+        <fieldset>
+          <legend>Post a thread</legend>
+          <input class="pure-u-1-5 topic-post" placeholder="Thread topic" v-model="threadTopic"/>
+          <br>
+          <textarea class="pure-u-1-2" placeholder="Thread content" v-model="threadText" />
+          <button type="submit" class="pure-button pure-button-primary buttons" @click.prevent="postThread">Post</button>
+        </fieldset>
+      </form>
+      <!-- filter bar -->
+      <form class="pure-form" @submit.prevent="filterThreads">
+        <fieldset>
+          <legend>Filter by topic</legend>
+          <select class="topic-select pure-u-1-3" v-model="filteredTopic" value="filteredTopic">
+            <option v-for="topic in topics" v-bind:key="topic">{{ topic }}</option>
+          </select>
+          <button class="pure-button pure-button-secondary buttons" @click.prevent="clearFilter">Clear</button>
+        </fieldset>
+      </form>
+    </div>
 
     <!-- thread list -->
     <h2>Threads</h2>
@@ -49,6 +51,7 @@ export default {
   },
   created() {
     this.getThreadList();
+    this.getUserData();
   },
   methods: {
     async getThreadList() {
@@ -78,6 +81,14 @@ export default {
     },
     clearFilter() {
       this.filteredTopic = '';
+    },
+    async getUserData() {
+      try {
+        let response = await axios.get('/api/users');
+        this.$root.$data.user = response.data.user;
+      } catch (error) {
+        this.$root.$data.user = null;
+      }
     }
   },
   computed: {
@@ -100,6 +111,11 @@ export default {
       }
       threads.sort((a, b) => b.rating - a.rating);
       return threads;
+    },
+    checkUser() {
+      if (this.$root.$data.user == null)
+        return false;
+      return true;
     }
   }
 };

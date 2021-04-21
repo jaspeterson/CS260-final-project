@@ -3,12 +3,14 @@
         <thread :threadID=id />
         <h2>Comments</h2>
         <hr>
-        <form class="pure-form" @submit.prevent="postComment">
-            <fieldset>
-                <textarea class="pure-u-1-2" placeholder="Comment" v-model="commentText" />
-                <button type="submit" class="pure-button pure-button-primary buttons">Post</button>
-            </fieldset>
-        </form>
+        <div v-if="checkUser">
+            <form class="pure-form" @submit.prevent="postComment">
+                <fieldset>
+                    <textarea class="pure-u-1-2" placeholder="Comment" v-model="commentText" />
+                    <button type="submit" class="pure-button pure-button-primary buttons">Post</button>
+                </fieldset>
+            </form>
+        </div>
         <div class="comment-list">
             <div v-for="comment in comments" v-bind:key="comment._id">
                 <comment :comment="comment" />
@@ -71,6 +73,13 @@ export default ({
             } catch (error) {
                 console.log(error);
             }
+        }
+    },
+    computed: {
+        checkUser() {
+            if (this.$root.$data.user == null)
+                return false;
+            return true;
         }
     }
 })
