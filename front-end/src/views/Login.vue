@@ -34,7 +34,7 @@
 <script>
 import axios from 'axios';
 export default {
-  name: 'HomePage',
+  name: 'Login',
   data() {
     return {
       firstName: '',
@@ -51,6 +51,7 @@ export default {
     try {
       let response = await axios.get('/api/users');
       this.$root.$data.user = response.data.user;
+      this.routeToUser();
     } catch (error) {
       this.$root.$data.user = null;
     }
@@ -69,6 +70,7 @@ export default {
           password: this.password,
         });
         this.$root.$data.user = response.data.user;
+        this.routeToMain();
       } catch (error) {
         this.error = error.response.data.message;
         this.$root.$data.user = null;
@@ -85,11 +87,18 @@ export default {
           password: this.passwordLogin,
         });
         this.$root.$data.user = response.data.user;
+        this.routeToMain();
       } catch (error) {
         this.errorLogin = "Error: " + error.response.data.message;
         this.$root.$data.user = null;
       }
     },
+    routeToMain() {
+      this.$router.push('/');
+    },
+    routeToUser() {
+      this.$router.push('/user');
+    }
   },
   computed: {
     user() {

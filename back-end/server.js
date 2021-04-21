@@ -9,10 +9,24 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
-mongoose.connect('mongodb://localhost:27017/forum', {
+mongoose.connect('mongodb://localhost:27017/forum2', {
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
+
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
+const cookieSession = require('cookie-session');
+app.use(cookieSession({
+  name: 'session',
+  keys: [
+    'secretValue'
+  ],
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
 
 const users = require("./users.js");
 app.use("/api/users", users.routes);

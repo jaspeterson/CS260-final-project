@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-link to="/" class="header-link"><h1 class="header">The Forum</h1></router-link>
+    <router-link to="/" class="header-link"><div></div><h1 class="header">The Forum</h1><router-link to="/login" class="login-link">{{ loginMsg }}</router-link></router-link>
     <div class="content">
       <router-view />
     </div>
@@ -18,6 +18,15 @@ export default {
   name: "App",
   components: {
   },
+  computed: {
+    loginMsg() {
+      if (this.$root.$data.user == null) {
+        return "Login";
+      } else {
+        return this.$root.$data.user.firstName + " " + this.$root.$data.user.lastName;
+      }
+    }
+  }
 };
 </script>
 
@@ -30,29 +39,29 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 .header-link {
   text-decoration: none;
   color: black;
   height: 5vh;
+  display: flex;
+  justify-content: space-between;
   /* left: 50%;
   transform: translate(-50%, 0); */
 }
 
+.header {
+  margin-left: 80px;
+}
+
+.login-link {
+  padding: 20px;
+  text-decoration: none;
+  color: #0078E7;
+}
+
 .content {
   min-height: 84vh;
+  margin-top: 2vh;
 }
 
 .footer {
