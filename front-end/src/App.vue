@@ -8,7 +8,7 @@
       <div> ~ </div>
       <a class="footer-link" href="https://github.com/jaspeterson/CS260-final-project">github</a>
       <div> ~ </div>
-      <div class="footer-link">Hours worked: #</div>
+      <div class="footer-link">Hours worked: 8</div>
       <div> ~ </div>
     </div>
   </div>
