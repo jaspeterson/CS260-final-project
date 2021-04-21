@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   username: String,
   password: String,
-  bio: String,
   image: String,
 });
 

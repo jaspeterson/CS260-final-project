@@ -1,7 +1,7 @@
 <template>
     <section class="comment">
         <div class="comment-container">
-            <div class="comment-details">
+            <div class="comment-details" @click.prevent="viewUserProfile()">
                 <div>{{formatDate(comment.posted)}}</div>
                 <div class="comment-author"> -- {{ comment.user.firstName }} {{ comment.user.lastName }}</div>
             </div>
@@ -22,6 +22,9 @@ export default ({
         formatDate(date) {
             return moment(date).format('d MMMM YYYY');
         },
+        viewUserProfile() {
+            this.$router.push('/user/' + this.comment.user._id);
+        }
     }
 })
 </script>
@@ -43,6 +46,7 @@ export default ({
     padding: 10px;
     border-radius: 10px;
     justify-content: center;
+    cursor: pointer;
 }
 
 .comment-author {

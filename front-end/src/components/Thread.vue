@@ -6,8 +6,10 @@
                     <button @click.prevent="increaseRating()" class="pure-button vote-button">+</button>
                     <div class="rating-text">{{ thread.rating }} points</div>
                 </div>
-                <div>{{formatDate(thread.posted)}}</div>
-                <div class="thread-author"> -- {{ thread.user.firstName }} {{ thread.user.lastName }}</div>
+                <div @click.prevent="viewUserProfile()">
+                    <div>{{formatDate(thread.posted)}}</div>
+                    <div class="thread-author"> -- {{ thread.user.firstName }} {{ thread.user.lastName }}</div>
+                </div>
             </div>
             <div class="thread-main">
                 <h1>{{ thread.topic }}</h1>
@@ -53,6 +55,9 @@ export default ({
             } catch (error) {
                 console.log(error);
             }
+        },
+        viewUserProfile() {
+            this.$router.push('/user/' + this.thread.user._id);
         }
     }
 })

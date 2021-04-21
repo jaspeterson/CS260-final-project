@@ -31,9 +31,9 @@ export default {
             user: {}
         }
     },
-    created() {
+    async created() {
+        await this.getUser();
         this.getUserThreadList();
-        this.getUser();
     },
     methods: {
         async logout() {
@@ -47,7 +47,7 @@ export default {
         },
         async getUserThreadList() {
             try {
-                let response = await axios.get("/api/thread/userThreads");
+                let response = await axios.get("/api/thread/userThreads/" + this.user._id);
                 this.userThreads = response.data;
             } catch (error) {
                 console.log(error);
@@ -64,7 +64,7 @@ export default {
     },
     computed: {
         checkUser() {
-            return this.$root.$data.user._id == this.user._id;
+            return this.$root.$data.user._id === this.user._id;
         }
     }
 }
