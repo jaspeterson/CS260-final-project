@@ -14,6 +14,9 @@ mongoose.connect('mongodb://localhost:27017/forum', {
   useNewUrlParser: true
 });
 
+const users = require("./users.js");
+app.use("/api/users", users.routes);
+
 const thread = require("./thread.js");
 app.use("/api/thread", thread.routes);
 
